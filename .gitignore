@@ -93,4 +93,5 @@ crashlytics-build.properties
 # Support for Project snippet scope
 !.vscode/*.code-snippets
 
-
+#Visual Paradigm
+*.vpp*
