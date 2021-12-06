@@ -20,6 +20,7 @@ public class TilemapManager : MonoBehaviour
 
     [SerializeField] private Tilemap groundMap;
     [SerializeField] private Tilemap collisionsMap;
+    [SerializeField] private Tilemap highlightMap;
 
     public Tilemap Ground
     {
@@ -29,6 +30,11 @@ public class TilemapManager : MonoBehaviour
     public Tilemap Collision
     {
         get { return collisionsMap; }
+    }
+
+    public Tilemap Highlights
+    {
+        get { return highlightMap; }
     }
 
     void Awake()

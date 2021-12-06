@@ -6,28 +6,29 @@ using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] private Tilemap groundMap;
-	[SerializeField] private Tilemap collisionsMap;
-	[SerializeField] private Tilemap highlightMap;
 	[SerializeField] private Tile highlightTile;
-	[SerializeField] private float moveSpeed;
+	private TilemapManager tilemapManager;
 	private Vector3Int oldPosition;
 	private Camera mainCamera;
 
 	private PlayerMovement controls;
 
-	private void Awake() {
+	private void Awake()
+	{
+		tilemapManager = TilemapManager.instance;
 		controls = new PlayerMovement();
 		mainCamera = Camera.main;
 		oldPosition = Vector3Int.RoundToInt(transform.position);
-		highlightMap.SetTile(oldPosition, highlightTile);
+		tilemapManager.Highlights.SetTile(oldPosition, highlightTile);
 	}
 
-	private void OnEnable() {
+	private void OnEnable()
+	{
 		controls.Enable();
 	}
 
-	private void OnDisable() {
+	private void OnDisable()
+	{
 		controls.Disable();
 	}
 
@@ -36,7 +37,8 @@ public class PlayerController : MonoBehaviour
 		controls.Main.Movement.performed += context => Move(context);;
     }
 
-	private void Move(UnityEngine.InputSystem.InputAction.CallbackContext context) {
+	private void Move(UnityEngine.InputSystem.InputAction.CallbackContext context)
+	{
 		Vector3 direction = context.ReadValue<Vector2>()/2f;
 
 		switch (context.control.displayName)
@@ -54,17 +56,18 @@ public class PlayerController : MonoBehaviour
 		if (CanMove(direction))
 		{
 			transform.position += direction;
-			highlightMap.SetTile(oldPosition, null);
-			oldPosition = groundMap.WorldToCell(transform.position);
+			tilemapManager.Highlights.SetTile(oldPosition, null);
+			oldPosition = tilemapManager.Ground.WorldToCell(transform.position);
 			Debug.Log(transform.position + " " + oldPosition);
-			highlightMap.SetTile(oldPosition, highlightTile);
+			tilemapManager.Highlights.SetTile(oldPosition, highlightTile);
 		}
 	}
 
-	private bool CanMove(Vector3 direction) {
-		Vector3Int gridPosition = groundMap.WorldToCell(transform.position + direction);
+	private bool CanMove(Vector3 direction)
+	{
+		Vector3Int gridPosition = tilemapManager.Ground.WorldToCell(transform.position + direction);
 		gridPosition.z = 0;
-		return (groundMap.HasTile(gridPosition) && !collisionsMap.HasTile(gridPosition));
+		return (tilemapManager.Ground.HasTile(gridPosition) && !tilemapManager.Collision.HasTile(gridPosition));
 	}
 
     void Update()
