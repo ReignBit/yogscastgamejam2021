@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
 		tilemapManager = TilemapManager.instance;
 		controls = new PlayerMovement();
 		mainCamera = Camera.main;
-		oldPosition = Vector3Int.RoundToInt(transform.position);
-		tilemapManager.Highlights.SetTile(oldPosition, highlightTile);
+		// oldPosition = Vector3Int.RoundToInt(transform.position);
+		// tilemapManager.Highlights.SetTile(oldPosition, highlightTile);
 	}
 
 	private void OnEnable()
@@ -46,20 +46,21 @@ public class PlayerController : MonoBehaviour
 			case "W":
 			case "S":
 				direction.x = direction.y*-1f;
+				direction.y /= 2f;
 				break;
 			case "A":
 			case "D":
-				direction.y = direction.x;
+				direction.y = direction.x/2f;
 				break;
 		}
 
 		if (CanMove(direction))
 		{
 			transform.position += direction;
-			tilemapManager.Highlights.SetTile(oldPosition, null);
-			oldPosition = tilemapManager.Ground.WorldToCell(transform.position);
-			Debug.Log(transform.position + " " + oldPosition);
-			tilemapManager.Highlights.SetTile(oldPosition, highlightTile);
+			// tilemapManager.Highlights.SetTile(oldPosition, null);
+			// oldPosition = tilemapManager.Ground.WorldToCell(transform.position);
+			// Debug.Log(transform.position + " " + oldPosition);
+			// tilemapManager.Highlights.SetTile(oldPosition, highlightTile);
 		}
 	}
 
@@ -67,6 +68,8 @@ public class PlayerController : MonoBehaviour
 	{
 		Vector3Int gridPosition = tilemapManager.Ground.WorldToCell(transform.position + direction);
 		gridPosition.z = 0;
+		Debug.Log(transform.position + " D:" + direction);
+		Debug.Log(transform.position + " G:" + gridPosition);
 		return (tilemapManager.Ground.HasTile(gridPosition) && !tilemapManager.Collision.HasTile(gridPosition));
 	}
 
