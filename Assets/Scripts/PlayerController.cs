@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
 
 	private void Awake()
 	{
-		playerInput 	= GetComponent<PlayerInput>();
-		moveAction 		= playerInput.actions["Movement"];
-		mainCamera 		= Camera.main;
+		playerInput = GetComponent<PlayerInput>();
+		moveAction 	= playerInput.actions["Movement"];
+		mainCamera 	= Camera.main;
 	}
 
     void Start()

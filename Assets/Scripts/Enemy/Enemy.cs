@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : BaseEnemy
 {
+    string name = "Enemy Test";
+
 
 	private void Start()
 	{
@@ -12,8 +14,8 @@ public class Enemy : BaseEnemy
 
     public override void DoTurn()
     {
-        Debug.Log("DoTurn on enemy");
-        Move(Random.Range(0, 4));
+        Debug.Log("Do Turn on enemy");
+        // Move(new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.25f, 0.25f), 0));
     }
 
 }

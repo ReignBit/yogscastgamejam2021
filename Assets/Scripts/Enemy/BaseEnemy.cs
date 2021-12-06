@@ -16,13 +16,11 @@ public abstract class BaseEnemy : MonoBehaviour
 {
 
     new string name = "Unnamed Enemy";
-	Vector3[] positions = {new Vector3(0.5f, 0.25f, 0), new Vector3(-0.5f, -0.25f, 0), new Vector3(0.5f, -0.25f, 0), new Vector3(-0.5f, -0.25f, 0)};
     public abstract void DoTurn();
 
-    public void Move(int index)
+    public void Move(Vector3 destination)
     {
-
-        Vector3Int cellPos = TilemapManager.instance.Ground.WorldToCell(positions[index] + transform.position);
+        Vector3Int cellPos = TilemapManager.instance.Ground.WorldToCell(destination);
 
         if (TilemapManager.instance.Ground.HasTile(cellPos))
 		{
