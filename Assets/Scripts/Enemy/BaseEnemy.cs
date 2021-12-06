@@ -12,13 +12,12 @@ using UnityEngine.Tilemaps;
     Override DoTurn in child class to add AI implementation.
 */
 
-public class BaseEnemy : MonoBehaviour
+public abstract class BaseEnemy : MonoBehaviour
 {
-    new string name = "Unnamed Enemy";
-    public virtual void DoTurn()
-    {
+	[SerializeField] private static Tile enemyTile;
 
-    }
+    new string name = "Unnamed Enemy";
+    public abstract void DoTurn();
 
     public void Move(Vector3 destination)
     {

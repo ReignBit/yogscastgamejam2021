@@ -1,43 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] private Tile highlightTile;
-	private TilemapManager tilemapManager;
-	private Vector3Int oldPosition;
+	[SerializeField] private Tile playerTile;
 	private Camera mainCamera;
+	private PlayerInput playerInput;
 
-	private PlayerMovement controls;
+	private InputAction moveAction;
 
 	private void Awake()
 	{
-		tilemapManager = TilemapManager.instance;
-		controls = new PlayerMovement();
-		mainCamera = Camera.main;
-		// oldPosition = Vector3Int.RoundToInt(transform.position);
-		// tilemapManager.Highlights.SetTile(oldPosition, highlightTile);
-	}
-
-	private void OnEnable()
-	{
-		controls.Enable();
-	}
-
-	private void OnDisable()
-	{
-		controls.Disable();
+		playerInput 	= GetComponent<PlayerInput>();
+		moveAction 		= playerInput.actions["Movement"];
+		mainCamera 		= Camera.main;
+		TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), playerTile);
 	}
 
     void Start()
     {
-		controls.Main.Movement.performed += context => Move(context);;
+		moveAction.performed += Move;
     }
 
-	private void Move(UnityEngine.InputSystem.InputAction.CallbackContext context)
+	private void Move(InputAction.CallbackContext context)
 	{
 		Vector3 direction = context.ReadValue<Vector2>()/2f;
 
@@ -56,21 +42,18 @@ public class PlayerController : MonoBehaviour
 
 		if (CanMove(direction))
 		{
-			transform.position += direction;
-			// tilemapManager.Highlights.SetTile(oldPosition, null);
-			// oldPosition = tilemapManager.Ground.WorldToCell(transform.position);
-			// Debug.Log(transform.position + " " + oldPosition);
-			// tilemapManager.Highlights.SetTile(oldPosition, highlightTile);
+			Vector3 newPos = transform.position + direction;
+			TilemapManager.instance.MoveTile(transform.position, newPos, TilemapManager.instance.Entities);
+			transform.position = newPos;
+			RoundManager.instance.EndPlayerTurn();
 		}
 	}
 
 	private bool CanMove(Vector3 direction)
 	{
-		Vector3Int gridPosition = tilemapManager.Ground.WorldToCell(transform.position + direction);
+		Vector3Int gridPosition = TilemapManager.instance.Ground.WorldToCell(transform.position + direction);
 		gridPosition.z = 0;
-		Debug.Log(transform.position + " D:" + direction);
-		Debug.Log(transform.position + " G:" + gridPosition);
-		return (tilemapManager.Ground.HasTile(gridPosition) && !tilemapManager.Collision.HasTile(gridPosition));
+		return (TilemapManager.instance.Ground.HasTile(gridPosition) && !TilemapManager.instance.Collision.HasTile(gridPosition));
 	}
 
     void Update()

@@ -20,7 +20,7 @@ public class TilemapManager : MonoBehaviour
 
     [SerializeField] private Tilemap groundMap;
     [SerializeField] private Tilemap collisionsMap;
-    [SerializeField] private Tilemap highlightMap;
+    [SerializeField] private Tilemap entitiesMap;
 
     public Tilemap Ground
     {
@@ -32,9 +32,9 @@ public class TilemapManager : MonoBehaviour
         get { return collisionsMap; }
     }
 
-    public Tilemap Highlights
+    public Tilemap Entities
     {
-        get { return highlightMap; }
+        get { return entitiesMap; }
     }
 
     void Awake()
@@ -48,4 +48,25 @@ public class TilemapManager : MonoBehaviour
             instance = this;
         }
     }
+
+	public void MoveTile(GameObject entity, Vector3Int newPos, Tilemap map)
+	{
+		Vector3Int oldPos = map.WorldToCell(entity.transform.position);
+		map.SetTile(newPos, map.GetTile(oldPos));
+		map.SetTile(oldPos, null);
+	}
+
+	public void MoveTile(Vector3 oldPosition, Vector3 newPosition, Tilemap map)
+	{
+		Vector3Int newPos = map.WorldToCell(newPosition);
+		Vector3Int oldPos = map.WorldToCell(oldPosition);
+		map.SetTile(newPos, map.GetTile(oldPos));
+		map.SetTile(oldPos, null);
+	}
+
+	public void MoveTile(Vector3Int oldPos, Vector3Int newPos, Tilemap map)
+	{
+		map.SetTile(newPos, map.GetTile(oldPos));
+		map.SetTile(oldPos, null);
+	}
 }

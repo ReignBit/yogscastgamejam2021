@@ -21,17 +21,12 @@ public class RoundManager : MonoBehaviour
     [SerializeField] List<BaseEnemy> enemies = new List<BaseEnemy>();
 
     void Awake()
-    {   
+    {
         // Singleton
         if (instance != null)
-        {
             Debug.LogError("More than one RoundManager in the scene! Undefined behaviour will occur!");
-            
-        }
         else
-        {
             instance = this;
-        }
     }
 
 

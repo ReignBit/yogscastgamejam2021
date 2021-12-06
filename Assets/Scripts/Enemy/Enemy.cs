@@ -12,5 +12,5 @@ public class Enemy : BaseEnemy
         Debug.Log("DoTurn on enemy");
         Move(new Vector3(Random.Range(0, 1), Random.Range(0, 1), 0));
     }
-    
+
 }
