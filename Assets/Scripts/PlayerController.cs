@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] private Tile playerTile;
 	private Camera mainCamera;
 	private PlayerInput playerInput;
 
@@ -15,12 +14,12 @@ public class PlayerController : MonoBehaviour
 		playerInput 	= GetComponent<PlayerInput>();
 		moveAction 		= playerInput.actions["Movement"];
 		mainCamera 		= Camera.main;
-		TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), playerTile);
 	}
 
     void Start()
     {
 		moveAction.performed += Move;
+		TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.PlayerTile);
     }
 
 	private void Move(InputAction.CallbackContext context)

@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Enemy : BaseEnemy
 {
-    string name = "Enemy Test";
 
+	private void Start()
+	{
+		TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.EnemyTile);
+	}
 
     public override void DoTurn()
     {
         Debug.Log("DoTurn on enemy");
-        Move(new Vector3(Random.Range(0, 1), Random.Range(0, 1), 0));
+        Move(Random.Range(0, 4));
     }
 
 }

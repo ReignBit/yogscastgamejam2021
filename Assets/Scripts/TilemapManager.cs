@@ -21,6 +21,8 @@ public class TilemapManager : MonoBehaviour
     [SerializeField] private Tilemap groundMap;
     [SerializeField] private Tilemap collisionsMap;
     [SerializeField] private Tilemap entitiesMap;
+    [SerializeField] private Tile enemyTile;
+    [SerializeField] private Tile playerTile;
 
     public Tilemap Ground
     {
@@ -36,6 +38,16 @@ public class TilemapManager : MonoBehaviour
     {
         get { return entitiesMap; }
     }
+
+	public Tile PlayerTile
+	{
+		get { return playerTile; }
+	}
+
+	public Tile EnemyTile
+	{
+		get { return enemyTile; }
+	}
 
     void Awake()
     {
