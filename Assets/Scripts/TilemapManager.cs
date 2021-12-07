@@ -98,11 +98,7 @@ public class TilemapManager : MonoBehaviour
 
 	public bool CanMove(Vector3 position)
 	{
-		Vector3Int pos = groundMap.WorldToCell(position);
-		return (
-			groundMap.HasTile(pos)
-			&& !collisionsMap.HasTile(pos)
-		);
+		return CanMove(groundMap.WorldToCell(position));
 	}
 
 	public TileBase GetEntity(Vector3Int position)
