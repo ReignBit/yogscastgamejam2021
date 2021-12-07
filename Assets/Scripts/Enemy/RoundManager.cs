@@ -20,6 +20,7 @@ public class RoundManager : MonoBehaviour
     public static RoundManager instance;
 
     [SerializeField] List<BaseEnemy> enemies = new List<BaseEnemy>();
+    [SerializeField] List<Present> presents = new List<Present>();
 
     void Awake()
     {
@@ -36,9 +37,9 @@ public class RoundManager : MonoBehaviour
     /// </summary>
     public void EndPlayerTurn()
     {
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            enemies[i].DoTurn();
+        foreach (BaseEnemy enemy in enemies)
+		{
+            enemy.DoTurn();
         }
     }
 
@@ -61,7 +62,62 @@ public class RoundManager : MonoBehaviour
     {
         if (enemies.Contains(enemy))
         {
+			print("Deleting " + enemy + " at " + enemy.transform.position);
             enemies.Remove(enemy);
+			GameObject.Destroy(enemy);
         }
+
+		Debug.LogWarning("Can't remove enemy. Enemy not in list.");
     }
+
+	public void RemoveEnemy(Vector3 position)
+	{
+		BaseEnemy enemy = FindEnemy(position);
+		RemoveEnemy(enemy);
+	}
+
+	public void RemovePresent(Present present)
+	{
+		if (presents.Contains(present))
+		{
+			print("Deleting " + present + " at " + present.transform.position);
+			presents.Remove(present);
+			GameObject.Destroy(present);
+		}
+
+		Debug.LogWarning("Can't remove present. Present not in list.");
+	}
+
+	public void RemovePresent(Vector3 position)
+	{
+
+		Present present = FindPresent(position);
+		RemovePresent(present);
+	}
+
+	public BaseEnemy FindEnemy(Vector3 position)
+	{
+		foreach (BaseEnemy enemy in enemies)
+		{
+			if (enemy.transform.position == position)
+			{
+				return enemy;
+			}
+		}
+
+		return null;
+	}
+
+	public Present FindPresent(Vector3 position)
+	{
+		foreach (Present present in presents)
+		{
+			if (present.transform.position == position)
+			{
+				return present;
+			}
+		}
+
+		return null;
+	}
 }

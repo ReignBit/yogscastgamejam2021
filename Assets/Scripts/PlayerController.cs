@@ -39,23 +39,19 @@ public class PlayerController : MonoBehaviour
 				break;
 		}
 
-		if (CanMove(direction))
+		if (TilemapManager.instance.CanMove(direction))
 		{
 			Vector3 newPos = transform.position + direction;
+			TileBase entity = TilemapManager.instance.GetEntity(newPos);
+
+			if (entity == TilemapManager.instance.EnemyTile)
+				RoundManager.instance.RemoveEnemy(newPos);
+			else if (entity == TilemapManager.instance.PresentTile)
+				RoundManager.instance.RemovePresent(newPos);
+
 			TilemapManager.instance.MoveTile(transform.position, newPos, TilemapManager.instance.Entities);
 			transform.position = newPos;
 			RoundManager.instance.EndPlayerTurn();
 		}
 	}
-
-	private bool CanMove(Vector3 direction)
-	{
-		Vector3Int gridPosition = TilemapManager.instance.Ground.WorldToCell(transform.position + direction);
-		gridPosition.z = 0;
-		return (TilemapManager.instance.Ground.HasTile(gridPosition) && !TilemapManager.instance.Collision.HasTile(gridPosition));
-	}
-
-    void Update()
-    {
-    }
 }

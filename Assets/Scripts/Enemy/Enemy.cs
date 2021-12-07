@@ -14,7 +14,7 @@ public class Enemy : BaseEnemy
 
     public override void DoTurn()
     {
-        Debug.Log("Do Turn on enemy");
+        // Debug.Log("Do Turn on enemy");
         // Move(new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.25f, 0.25f), 0));
     }
 
