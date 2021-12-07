@@ -6,7 +6,10 @@ public class Enemy : BaseEnemy
 {
     string name = "Enemy Test";
 
-	// Times by -1 to get other 2 options
+	// (-0.5, 0.25) 	= W
+	// (-0.5, -0.25) 	= A
+	// (0.5, -0.25) 	= S
+	// (0.5, 0.25) 		= D
 	Vector3[] movePositions = {new Vector3(0.5f, 0.25f, 0), new Vector3(0.5f, -0.25f)};
 
 
