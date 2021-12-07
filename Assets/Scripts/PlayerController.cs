@@ -39,9 +39,9 @@ public class PlayerController : MonoBehaviour
 				break;
 		}
 
-		if (TilemapManager.instance.CanMove(direction))
+		Vector3 newPos = transform.position + direction;
+		if (TilemapManager.instance.CanMove(newPos))
 		{
-			Vector3 newPos = transform.position + direction;
 			TileBase entity = TilemapManager.instance.GetEntity(newPos);
 
 			if (entity == TilemapManager.instance.EnemyTile)
