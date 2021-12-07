@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using TMPro;
 
 /*
     RoundManager.cs
@@ -21,6 +21,7 @@ public class RoundManager : MonoBehaviour
 
     [SerializeField] List<BaseEnemy> enemies = new List<BaseEnemy>();
     [SerializeField] List<Present> presents = new List<Present>();
+	[SerializeField] TextMeshProUGUI presentsCollected;
 
     void Awake()
     {
@@ -53,6 +54,29 @@ public class RoundManager : MonoBehaviour
         enemies.Add(enemy);
     }
 
+	public bool HitEnemy(Vector3 position)
+	{
+
+		return HitEnemy(FindEnemy(position));
+	}
+
+	public bool HitEnemy(BaseEnemy enemy)
+	{
+		RemoveEnemy(enemy);
+		return true;
+	}
+
+	public void CollectPresent(Vector3 position)
+	{
+		presentsCollected.text = " x 1 / 1";
+		CollectPresent(FindPresent(position));
+	}
+
+	public void CollectPresent(Present present)
+	{
+
+		RemovePresent(present);
+	}
 
     /// <summary>
     /// Remove an enemy from the enemies list. Does nothing if enemny not in list.

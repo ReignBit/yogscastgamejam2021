@@ -45,9 +45,9 @@ public class PlayerController : MonoBehaviour
 			TileBase entity = TilemapManager.instance.GetEntity(newPos);
 
 			if (entity == TilemapManager.instance.EnemyTile)
-				RoundManager.instance.RemoveEnemy(newPos);
+				RoundManager.instance.HitEnemy(newPos);
 			else if (entity == TilemapManager.instance.PresentTile)
-				RoundManager.instance.RemovePresent(newPos);
+				RoundManager.instance.CollectPresent(newPos);
 
 			TilemapManager.instance.MoveTile(transform.position, newPos, TilemapManager.instance.Entities);
 			transform.position = newPos;
