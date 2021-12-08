@@ -23,6 +23,8 @@ public class RoundManager : MonoBehaviour
     [SerializeField] List<Present> presents = new List<Present>();
 	[SerializeField] TextMeshProUGUI presentsCollected;
 
+    public GameObject deathParticleSystemPrefab;
+
     void Awake()
     {
         // Singleton
@@ -88,7 +90,7 @@ public class RoundManager : MonoBehaviour
         {
 			print("Deleting " + enemy + " at " + enemy.transform.position);
             enemies.Remove(enemy);
-			GameObject.Destroy(enemy);
+			GameObject.Destroy(enemy.gameObject);
         }
 
 		Debug.LogWarning("Can't remove enemy. Enemy not in list.");
