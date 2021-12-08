@@ -56,8 +56,6 @@ public abstract class BaseEnemy : MonoBehaviour
 
             TileBase entity = TilemapManager.instance.GetEntity(cellPos);
 
-            Debug.Log(entity);
-
             if (entity != TilemapManager.instance.EnemyTile)
             {
                 TilemapManager.instance.MoveTile(oldPos, cellPos, TilemapManager.instance.Entities);
