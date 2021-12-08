@@ -14,7 +14,6 @@ public class Enemy : BaseEnemy
         {
             // Default move: Move randomly
             int random = Random.Range(0, movePositions.Length - 1);
-            Debug.Log(random + " " + (movePositions.Length - 1));
             Move(transform.position + movePositions[random]);
         }
     }

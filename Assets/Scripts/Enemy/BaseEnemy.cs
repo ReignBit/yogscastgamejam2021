@@ -53,11 +53,23 @@ public abstract class BaseEnemy : MonoBehaviour
         Vector3Int oldPos = TilemapManager.instance.Ground.WorldToCell(transform.position);
         if (TilemapManager.instance.CanMove(cellPos))
         {
+
             TileBase entity = TilemapManager.instance.GetEntity(cellPos);
+
+            Debug.Log(entity);
+
             if (entity != TilemapManager.instance.EnemyTile)
             {
                 TilemapManager.instance.MoveTile(oldPos, cellPos, TilemapManager.instance.Entities);
                 transform.position = destination;
+            }
+            
+            
+            if (entity == TilemapManager.instance.PlayerTile)
+            {
+                // Kill the player
+                Debug.Log("PLAYER!");
+                RoundManager.instance.PlayerDeath();
             }
 
         }

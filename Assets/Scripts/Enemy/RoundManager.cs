@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 using TMPro;
 
 /*
@@ -23,7 +24,13 @@ public class RoundManager : MonoBehaviour
     [SerializeField] List<Present> presents = new List<Present>();
 	[SerializeField] TextMeshProUGUI presentsCollected;
 
+    [SerializeField] GameObject playerGameObject;
+
     public GameObject deathParticleSystemPrefab;
+
+    // Events
+    public UnityAction onPlayerDeath;
+
 
     void Awake()
     {
@@ -88,7 +95,6 @@ public class RoundManager : MonoBehaviour
     {
         if (enemies.Contains(enemy))
         {
-			print("Deleting " + enemy + " at " + enemy.transform.position);
             enemies.Remove(enemy);
 			GameObject.Destroy(enemy.gameObject);
         }
@@ -106,7 +112,6 @@ public class RoundManager : MonoBehaviour
 	{
 		if (presents.Contains(present))
 		{
-			print("Deleting " + present + " at " + present.transform.position);
 			presents.Remove(present);
 			GameObject.Destroy(present);
 		}
@@ -146,4 +151,17 @@ public class RoundManager : MonoBehaviour
 
 		return null;
 	}
+
+    /// <summary>
+    /// Call to kill the player
+    /// </summary>
+    public void PlayerDeath()
+    {
+        Debug.Log("Player has been killed!");
+        if (onPlayerDeath != null)
+        {
+            onPlayerDeath.Invoke();
+        }
+    }
+
 }

@@ -19,7 +19,15 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
 		moveAction.performed += Move;
-		TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.PlayerTile);
+        RoundManager.instance.onPlayerDeath += OnPlayerDeath;
+
+        TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.PlayerTile);
+    }
+
+    void OnPlayerDeath()
+    {
+
+        this.enabled = false;
     }
 
 	private void Move(InputAction.CallbackContext context)

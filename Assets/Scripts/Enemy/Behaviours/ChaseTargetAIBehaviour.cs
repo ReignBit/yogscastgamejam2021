@@ -21,22 +21,18 @@ public class ChaseTargetAIBehaviour : MonoBehaviour, AIBehaviourMixin
         
         if (Vector3.Dot(e.transform.up, vectorToTarget) >= 0.51)
         {
-            Debug.Log("UP");
             e.MoveCardinal(CardinalDirection.NORTH);
         }
         else if (Vector3.Dot(-e.transform.up, vectorToTarget) >= 0.51)
         {
-            Debug.Log("DOWN");
             e.MoveCardinal(CardinalDirection.SOUTH);
         }
         else if (Vector3.Dot(e.transform.right, vectorToTarget) >= 0.51)
         {
-            Debug.Log("RIGHT");
             e.MoveCardinal(CardinalDirection.EAST);
         }
         else if (Vector3.Dot(-e.transform.right, vectorToTarget) >= 0.51)
         {
-            Debug.Log("LEFT");
             e.MoveCardinal(CardinalDirection.WEST);
         }
         //e.Move(target.position);
