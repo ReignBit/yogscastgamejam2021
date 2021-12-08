@@ -23,6 +23,7 @@ public class TilemapManager : MonoBehaviour
     [SerializeField] private Tilemap entitiesMap;
     [SerializeField] private Tile enemyTile;
     [SerializeField] private Tile playerTile;
+    [SerializeField] private Tile presentTile;
 
     public Tilemap Ground
     {
@@ -47,6 +48,11 @@ public class TilemapManager : MonoBehaviour
 	public Tile EnemyTile
 	{
 		get { return enemyTile; }
+	}
+
+	public Tile PresentTile
+	{
+		get { return presentTile; }
 	}
 
     void Awake()
@@ -80,5 +86,28 @@ public class TilemapManager : MonoBehaviour
 	{
 		map.SetTile(newPos, map.GetTile(oldPos));
 		map.SetTile(oldPos, null);
+	}
+
+	public bool CanMove(Vector3Int position)
+	{
+		return (
+			groundMap.HasTile(position)
+			&& !collisionsMap.HasTile(position)
+		);
+	}
+
+	public bool CanMove(Vector3 position)
+	{
+		return CanMove(groundMap.WorldToCell(position));
+	}
+
+	public TileBase GetEntity(Vector3Int position)
+	{
+		return entitiesMap.GetTile(position);
+	}
+
+	public TileBase GetEntity(Vector3 position)
+	{
+		return entitiesMap.GetTile(entitiesMap.WorldToCell(position));
 	}
 }

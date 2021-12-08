@@ -43,7 +43,8 @@ public partial class @PlayerMovement : IInputActionCollection2, IDisposable
                     ""id"": ""5cdec182-81d3-47c4-83b7-e5561d43f9d5"",
                     ""path"": ""2DVector(mode=1)"",
                     ""interactions"": """",
-                    ""processors"": """",
+
+                    ""processors"": ""NormalizeVector2"",
                     ""groups"": """",
                     ""action"": ""Movement"",
                     ""isComposite"": true,

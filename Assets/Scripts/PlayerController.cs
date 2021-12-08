@@ -11,15 +11,23 @@ public class PlayerController : MonoBehaviour
 
 	private void Awake()
 	{
-		playerInput 	= GetComponent<PlayerInput>();
-		moveAction 		= playerInput.actions["Movement"];
-		mainCamera 		= Camera.main;
+		playerInput = GetComponent<PlayerInput>();
+		moveAction 	= playerInput.actions["Movement"];
+		mainCamera 	= Camera.main;
 	}
 
     void Start()
     {
 		moveAction.performed += Move;
-		TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.PlayerTile);
+        RoundManager.instance.onPlayerDeath += OnPlayerDeath;
+
+        TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.PlayerTile);
+    }
+
+    void OnPlayerDeath()
+    {
+
+        this.enabled = false;
     }
 
 	private void Move(InputAction.CallbackContext context)
@@ -39,23 +47,19 @@ public class PlayerController : MonoBehaviour
 				break;
 		}
 
-		if (CanMove(direction))
+		Vector3 newPos = transform.position + direction;
+		if (TilemapManager.instance.CanMove(newPos))
 		{
-			Vector3 newPos = transform.position + direction;
+			TileBase entity = TilemapManager.instance.GetEntity(newPos);
+
+			if (entity == TilemapManager.instance.EnemyTile)
+				RoundManager.instance.HitEnemy(newPos);
+			else if (entity == TilemapManager.instance.PresentTile)
+				RoundManager.instance.CollectPresent(newPos);
+
 			TilemapManager.instance.MoveTile(transform.position, newPos, TilemapManager.instance.Entities);
 			transform.position = newPos;
 			RoundManager.instance.EndPlayerTurn();
 		}
 	}
-
-	private bool CanMove(Vector3 direction)
-	{
-		Vector3Int gridPosition = TilemapManager.instance.Ground.WorldToCell(transform.position + direction);
-		gridPosition.z = 0;
-		return (TilemapManager.instance.Ground.HasTile(gridPosition) && !TilemapManager.instance.Collision.HasTile(gridPosition));
-	}
-
-    void Update()
-    {
-    }
 }

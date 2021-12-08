@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Enemy : BaseEnemy
 {
-
-	private void Start()
-	{
-		TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.EnemyTile);
-	}
-
     public override void DoTurn()
     {
-        Debug.Log("DoTurn on enemy");
-        Move(Random.Range(0, 4));
+        if (behaviour != null)
+        {
+            behaviour.DoTurn(this);
+        }
+        else
+        {
+            // Default move: Move randomly
+            int random = Random.Range(0, movePositions.Length - 1);
+            Move(transform.position + movePositions[random]);
+        }
     }
 
 }
