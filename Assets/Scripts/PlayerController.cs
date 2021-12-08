@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
 
 	private void Move(InputAction.CallbackContext context)
 	{
+		if (!context.performed)
+			return;
+
 		Vector3 direction = context.ReadValue<Vector2>()/2f;
 
 		switch (context.control.displayName)
