@@ -4073,6 +4073,7 @@ Tilemap:
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: 9, y: 5, z: 0}
+
     second:
       serializedVersion: 2
       m_TileIndex: 0
@@ -4696,9 +4697,13 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 307
     m_Data: {fileID: 11400000, guid: 1f17341eb42d5194fb09923a7d0ce149, type: 2}
+  - m_RefCount: 12
+    m_Data: {fileID: 11400000, guid: e8bd31ad08c5cf64b81372b911449af8, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 307
     m_Data: {fileID: 21300000, guid: 79435cf3b6c8fca48a65d54e7f98bb09, type: 3}
+  - m_RefCount: 12
+    m_Data: {fileID: 21300000, guid: a0aa9d7091295d24490f936967af45a8, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 307
     m_Data:
