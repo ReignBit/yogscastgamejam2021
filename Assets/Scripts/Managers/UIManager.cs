@@ -40,7 +40,6 @@ public class UIManager : MonoBehaviour
 		PlayerPrefs.SetFloat(slider.name, AudioListener.volume);
 
 		AudioManager.instance.AdjustVolume();
-		// PlayerPrefs.Save();
 	}
 
 	public void QuitGame()
