@@ -23,6 +23,8 @@ public class UIManager : MonoBehaviour
 			volumeTexts[i].text 	= volume.ToString("#%");
 			volumeSliders[i].value 	= volume;
 		}
+
+		// AudioManager.instance.AdjustVolume();
 	}
 
 	public void SetVolume(Slider slider)
@@ -37,6 +39,7 @@ public class UIManager : MonoBehaviour
 		volumeTexts[System.Array.IndexOf(volumeTypes, slider.name)].text = slider.value.ToString("#%");
 		PlayerPrefs.SetFloat(slider.name, AudioListener.volume);
 
+		AudioManager.instance.AdjustVolume();
 		// PlayerPrefs.Save();
 	}
 
