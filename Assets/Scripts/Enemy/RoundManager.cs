@@ -95,6 +95,13 @@ public class RoundManager : MonoBehaviour
     public void RemoveEnemy(BaseEnemy enemy)
     {
         Debug.Log("ASDSADAD");
+		foreach(BaseEnemy e in enemies)
+		{
+			print(e);
+		}
+
+		print("Enemy: " + enemy);
+
         if (enemies.Contains(enemy))
         {
             enemies.Remove(enemy);
@@ -142,7 +149,7 @@ public class RoundManager : MonoBehaviour
 	{
 		foreach (BaseEnemy enemy in enemies)
 		{
-			if (enemy.transform.position == position)
+			if (TilemapManager.instance.Entities.WorldToCell(enemy.transform.position) == TilemapManager.instance.Entities.WorldToCell(position))
 			{
 				return enemy;
 			}
@@ -170,7 +177,7 @@ public class RoundManager : MonoBehaviour
     public void PlayerDeath()
     {
 
-        
+
 
         Debug.Log("Player has been killed!");
         if (onPlayerDeath != null)
