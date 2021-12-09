@@ -24,9 +24,10 @@ public class RoundManager : MonoBehaviour
     [SerializeField] List<Present> presents = new List<Present>();
 	[SerializeField] TextMeshProUGUI presentsCollected;
 
-    [SerializeField] GameObject playerGameObject;
+    public Transform player;
 
     public GameObject deathParticleSystemPrefab;
+    public Sprite[] enemyTier1Sprites;
 
     // Events
     public UnityAction onPlayerDeath;
@@ -93,13 +94,17 @@ public class RoundManager : MonoBehaviour
     /// <param name="enemy">Enemy instance to remove.</param>
     public void RemoveEnemy(BaseEnemy enemy)
     {
+        Debug.Log("ASDSADAD");
         if (enemies.Contains(enemy))
         {
             enemies.Remove(enemy);
-			GameObject.Destroy(enemy.gameObject);
+            enemy.CreateDeathEffect();
+            GameObject.Destroy(enemy.gameObject);
         }
-
-		Debug.LogWarning("Can't remove enemy. Enemy not in list.");
+        else
+        {
+            Debug.LogWarning("Can't remove enemy. Enemy not in list.");
+        }
     }
 
 	public void RemoveEnemy(Vector3 position)
@@ -108,6 +113,11 @@ public class RoundManager : MonoBehaviour
 		RemoveEnemy(enemy);
 	}
 
+    public void AddPresent(Present present)
+    {
+        presents.Add(present);
+    }
+
 	public void RemovePresent(Present present)
 	{
 		if (presents.Contains(present))
@@ -115,8 +125,10 @@ public class RoundManager : MonoBehaviour
 			presents.Remove(present);
 			GameObject.Destroy(present);
 		}
-
-		Debug.LogWarning("Can't remove present. Present not in list.");
+        else
+        {
+		    Debug.LogWarning("Can't remove present. Present not in list.");
+        }
 	}
 
 	public void RemovePresent(Vector3 position)
@@ -157,6 +169,9 @@ public class RoundManager : MonoBehaviour
     /// </summary>
     public void PlayerDeath()
     {
+
+        
+
         Debug.Log("Player has been killed!");
         if (onPlayerDeath != null)
         {
@@ -164,4 +179,9 @@ public class RoundManager : MonoBehaviour
         }
     }
 
+
+    public Sprite GetRandomEnemySprite(int tier)
+    {
+        return enemyTier1Sprites[Random.Range(0, enemyTier1Sprites.Length - 1)];
+    }
 }

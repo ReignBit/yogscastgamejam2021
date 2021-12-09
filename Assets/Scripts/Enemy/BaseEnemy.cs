@@ -37,6 +37,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public void Start()
     {
+        GetComponent<SpriteRenderer>().sprite = RoundManager.instance.GetRandomEnemySprite(1);
         behaviour = GetComponent<AIBehaviourMixin>();
         TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.EnemyTile);
         RoundManager.instance.AddEnemy(this);
@@ -80,5 +81,10 @@ public abstract class BaseEnemy : MonoBehaviour
     public void MoveCardinal(CardinalDirection direction)
     {
         Move(transform.position + movePositions[(int)direction]);
+    }
+
+    public void CreateDeathEffect()
+    {
+        gameObject.AddComponent<DeathParticleEffect>();
     }
 }

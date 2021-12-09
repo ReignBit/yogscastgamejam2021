@@ -7,6 +7,11 @@ public class ChaseTargetAIBehaviour : MonoBehaviour, AIBehaviourMixin
 
     [SerializeField] Transform target;
 
+    void Start()
+    {
+        target = RoundManager.instance.player;
+    }
+
     void Update()
     {
         

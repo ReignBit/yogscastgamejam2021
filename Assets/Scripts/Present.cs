@@ -7,6 +7,8 @@ public class Present : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.PresentTile);
+        RoundManager.instance.AddPresent(this);
+        TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.PresentTile);
     }
+
 }

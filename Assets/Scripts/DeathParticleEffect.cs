@@ -8,12 +8,8 @@ public class DeathParticleEffect : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("aaaaaaa");
         prefab = RoundManager.instance.deathParticleSystemPrefab;
-    }
-
-    // Start is called before the first frame update
-    void OnDestroy()
-    {
         GameObject go = Instantiate(prefab, transform.position, Quaternion.identity);
         GameObject.Destroy(go, 2f);
     }
