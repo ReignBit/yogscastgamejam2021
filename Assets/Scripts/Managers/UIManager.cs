@@ -9,6 +9,20 @@ public class UIManager : MonoBehaviour
 
 	[SerializeField] private TMP_Text[] volumeTexts;
 	private string[] volumeTypes;
+	public static UIManager instance;
+	private GameObject previous;
+
+	private void Awake()
+	{
+		if (instance != null)
+		{
+			Debug.LogError("OH NO");
+		}
+		else
+		{
+			instance = this;
+		}
+	}
 
 
 	public void Start()
@@ -49,5 +63,15 @@ public class UIManager : MonoBehaviour
 	public void SelectLevel(string name)
 	{
 		SceneManager.LoadScene(name);
+	}
+
+	public void SwitchToOptions(GameObject previous)
+	{
+		this.previous = previous;
+	}
+
+	public void SwitchBackFromOptions()
+	{
+		previous.SetActive(true);
 	}
 }

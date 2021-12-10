@@ -13,9 +13,10 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private List<string> music;
 	[SerializeField] private List<string> soundEffects;
 	[SerializeField] private string menuMusic;
+	[SerializeField] private GameObject menu;
 	private string musicPath;
 	private string soundPath;
-	private int songIndex = 1;
+	private int songIndex;
 
 	private AudioClip nextSong;
 
@@ -32,17 +33,20 @@ public class AudioManager : MonoBehaviour
         }
 		audioSource = GetComponent<AudioSource>();
 
-		musicPath = "file://" + Application.streamingAssetsPath + "/Music/";
-		soundPath = "file://" + Application.streamingAssetsPath + "/Sound/";
-		music = GetFiles(Application.streamingAssetsPath + "/Music/", ".mp3");//, new string[] {"Walk_through_the_Snowy.mp3"});
-		soundEffects = GetFiles(Application.streamingAssetsPath + "/Sounds/", ".mp3");
-
-		StartCoroutine(LoadAudio(musicPath+menuMusic+".mp3", true));//, AudioType.MPEG ,true));
+		musicPath 		= "file://" + Application.streamingAssetsPath + "/Music/";
+		soundPath 		= "file://" + Application.streamingAssetsPath + "/Sound/";
+		music 			= GetFiles(Application.streamingAssetsPath + "/Music/", ".mp3", new string[] {"Walk_through_the_Snowy.mp3"});
+		soundEffects 	= GetFiles(Application.streamingAssetsPath + "/Sounds/", ".mp3");
+		songIndex = 0;
 	}
 
 	private void Start()
 	{
 		AdjustVolume();
+		if (menu.activeSelf)
+			PlayMenuMusic();
+		else
+			LoadAudio(music[songIndex], true);
 	}
 
 	private List<string> GetFiles(string path, string extension = "*", string[] ignored = null)
@@ -80,6 +84,11 @@ public class AudioManager : MonoBehaviour
 	public void AdjustVolume()
 	{
 		audioSource.volume = PlayerPrefs.GetFloat("Main Volume") * PlayerPrefs.GetFloat("Music Volume");
+	}
+
+	public void PlayMenuMusic()
+	{
+		StartCoroutine(LoadAudio(musicPath+menuMusic+".mp3", true, AudioType.MPEG, true));
 	}
 
 	private IEnumerator LoadAudio(string uri, bool startPlaying = false, AudioType audioType = AudioType.MPEG, bool loop = false)
@@ -121,11 +130,10 @@ public class AudioManager : MonoBehaviour
 		if (music.Count > 0)
 			songIndex = ++songIndex % music.Count;
 
-		print(songIndex);
 		audioSource.loop = loop;
 
-		if (!loop) {
-			print("Loading next: " + music[songIndex]);
+		if (!loop)
+		{
 			StartCoroutine(LoadAudio(music[songIndex]));
 			Invoke("PlayNext", audioClip.length+5);
 		}
@@ -133,7 +141,6 @@ public class AudioManager : MonoBehaviour
 
 	private void PlayNext()
 	{
-		print("Playing next");
 		PlaySong(nextSong);
 	}
 

@@ -62,8 +62,8 @@ public abstract class BaseEnemy : MonoBehaviour
                 TilemapManager.instance.MoveTile(oldPos, cellPos, TilemapManager.instance.Entities);
                 transform.position = destination;
             }
-            
-            
+
+
             if (entity == TilemapManager.instance.PlayerTile)
             {
                 // Kill the player
