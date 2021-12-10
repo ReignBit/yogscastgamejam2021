@@ -22,12 +22,15 @@ public class RoundManager : MonoBehaviour
 
     [SerializeField] List<BaseEnemy> enemies = new List<BaseEnemy>();
     [SerializeField] List<Present> presents = new List<Present>();
-	[SerializeField] TextMeshProUGUI presentsCollected;
+	[SerializeField] TMP_Text presentsText;
+	private int presentsCollected;
+	private int presentsTotal;
+	private int totalEnemies;
 
     public Transform player;
-
     public GameObject deathParticleSystemPrefab;
     public Sprite[] enemyTier1Sprites;
+
 
     // Events
     public UnityAction onPlayerDeath;
@@ -37,9 +40,15 @@ public class RoundManager : MonoBehaviour
     {
         // Singleton
         if (instance != null)
+		{
             Debug.LogError("More than one RoundManager in the scene! Undefined behaviour will occur!");
+		}
         else
+		{
             instance = this;
+			presentsCollected = 0;
+			presentsTotal = 0;
+		}
     }
 
 
@@ -78,7 +87,7 @@ public class RoundManager : MonoBehaviour
 
 	public void CollectPresent(Vector3 position)
 	{
-		presentsCollected.text = " x 1 / 1";
+		presentsText.text = string.Format("x {0} / {1}", ++presentsCollected, presentsTotal);
 		CollectPresent(FindPresent(position));
 	}
 
@@ -94,14 +103,6 @@ public class RoundManager : MonoBehaviour
     /// <param name="enemy">Enemy instance to remove.</param>
     public void RemoveEnemy(BaseEnemy enemy)
     {
-        Debug.Log("ASDSADAD");
-		foreach(BaseEnemy e in enemies)
-		{
-			print(e);
-		}
-
-		print("Enemy: " + enemy);
-
         if (enemies.Contains(enemy))
         {
             enemies.Remove(enemy);
@@ -123,6 +124,7 @@ public class RoundManager : MonoBehaviour
     public void AddPresent(Present present)
     {
         presents.Add(present);
+		presentsText.text = string.Format("x {0} / {1}", presentsCollected, ++presentsTotal);
     }
 
 	public void RemovePresent(Present present)
@@ -134,7 +136,7 @@ public class RoundManager : MonoBehaviour
 		}
         else
         {
-		    Debug.LogWarning("Can't remove present. Present not in list.");
+			Debug.LogWarning("Can't remove present. Present not in list.");
         }
 	}
 
@@ -176,16 +178,12 @@ public class RoundManager : MonoBehaviour
     /// </summary>
     public void PlayerDeath()
     {
-
-
-
         Debug.Log("Player has been killed!");
         if (onPlayerDeath != null)
         {
             onPlayerDeath.Invoke();
         }
     }
-
 
     public Sprite GetRandomEnemySprite(int tier)
     {
