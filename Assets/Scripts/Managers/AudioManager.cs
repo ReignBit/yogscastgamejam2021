@@ -13,7 +13,6 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private List<string> music;
 	[SerializeField] private List<string> soundEffects;
 	[SerializeField] private string menuMusic;
-	[SerializeField] private GameObject menu;
 	private string musicPath;
 	private string soundPath;
 	private int songIndex;
@@ -25,25 +24,27 @@ public class AudioManager : MonoBehaviour
         if (instance != null)
         {
             Debug.LogError("More than one TilemapManager!");
-			return;
         }
         else
         {
             instance = this;
-        }
-		audioSource = GetComponent<AudioSource>();
 
-		musicPath 		= "file://" + Application.streamingAssetsPath + "/Music/";
-		soundPath 		= "file://" + Application.streamingAssetsPath + "/Sound/";
-		music 			= GetFiles(Application.streamingAssetsPath + "/Music/", ".mp3", new string[] {"Walk_through_the_Snowy.mp3"});
-		soundEffects 	= GetFiles(Application.streamingAssetsPath + "/Sounds/", ".mp3");
-		songIndex = 0;
+			audioSource = GetComponent<AudioSource>();
+
+			musicPath 		= "file://" + Application.streamingAssetsPath + "/Music/";
+			soundPath 		= "file://" + Application.streamingAssetsPath + "/Sound/";
+
+			music 			= GetFiles(Application.streamingAssetsPath + "/Music/", ".mp3", new string[] {"Walk_through_the_Snowy.mp3"});
+			soundEffects 	= GetFiles(Application.streamingAssetsPath + "/Sounds/", ".mp3");
+
+			songIndex = 0;
+        }
 	}
 
 	private void Start()
 	{
 		AdjustVolume();
-		if (menu.activeSelf)
+		if (GameObject.Find("Menu"))
 			PlayMenuMusic();
 		else
 			LoadAudio(music[songIndex], true);

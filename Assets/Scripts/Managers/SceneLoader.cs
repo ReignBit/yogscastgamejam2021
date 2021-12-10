@@ -21,11 +21,12 @@ public class SceneLoader : MonoBehaviour
 
 	private void Start()
 	{
-		LoadScene("UI", LoadSceneMode.Single);
+		LoadScene("UI");
 	}
 
 	public void LoadScene(string sceneName, LoadSceneMode mode = LoadSceneMode.Additive)
 	{
+		print("Loading scene: " + sceneName + " with mode: " + mode);
 		SceneManager.LoadSceneAsync(sceneName, mode);
 	}
 

@@ -8,9 +8,16 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private Slider[] volumeSliders;
 
 	[SerializeField] private TMP_Text[] volumeTexts;
+	[SerializeField] private GameObject pauseMenu;
+	[SerializeField] private GameObject mainMenu;
+	[SerializeField] private GameObject options;
+	[SerializeField] private GameObject HUD;
+	[SerializeField] private GameObject levelSelect;
 	private string[] volumeTypes;
 	public static UIManager instance;
 	private GameObject previous;
+	private PlayerController player;
+
 
 	private void Awake()
 	{
@@ -21,6 +28,7 @@ public class UIManager : MonoBehaviour
 		else
 		{
 			instance = this;
+			mainMenu.SetActive(true);
 		}
 	}
 
@@ -38,8 +46,6 @@ public class UIManager : MonoBehaviour
 			volumeSliders[i].value 	= volume;
 		}
 
-		Resources.FindObjectsOfTypeAll<Canvas>()[0].transform.Find("Menu").gameObject.SetActive(true);
-		AudioManager.instance.PlayMenuMusic();
 	}
 
 	public void SetVolume(Slider slider)
@@ -63,9 +69,25 @@ public class UIManager : MonoBehaviour
 		Application.Quit();
 	}
 
+	public void PauseGame(PlayerController player)
+	{
+		this.player = player;
+		pauseMenu.SetActive(true);
+		HUD.SetActive(false);
+	}
+
+	public void ContinueGame()
+	{
+		pauseMenu.SetActive(false);
+		player.enabled = true;
+		HUD.SetActive(true);
+	}
+
 	public void SelectLevel(string name)
 	{
+		levelSelect.SetActive(false);
 		SceneLoader.instance.LoadScene(name);
+		HUD.SetActive(true);
 	}
 
 	public void SwitchToOptions(GameObject previous)

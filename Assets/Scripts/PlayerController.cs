@@ -8,17 +8,22 @@ public class PlayerController : MonoBehaviour
 	private PlayerInput playerInput;
 
 	private InputAction moveAction;
+	private InputAction pauseAction;
+
 
 	private void Awake()
 	{
 		playerInput = GetComponent<PlayerInput>();
 		moveAction 	= playerInput.actions["Movement"];
+		pauseAction = playerInput.actions["Pause"];
 		mainCamera 	= Camera.main;
 	}
 
     void Start()
     {
 		moveAction.performed += Move;
+		pauseAction.performed += Pause;
+
         RoundManager.instance.onPlayerDeath += OnPlayerDeath;
 
         TilemapManager.instance.Entities.SetTile(TilemapManager.instance.Entities.WorldToCell(transform.position), TilemapManager.instance.PlayerTile);
@@ -61,5 +66,11 @@ public class PlayerController : MonoBehaviour
 			transform.position = newPos;
 			RoundManager.instance.EndPlayerTurn();
 		}
+	}
+
+	private void Pause(InputAction.CallbackContext context)
+	{
+		UIManager.instance.PauseGame(this);
+		this.enabled = false;
 	}
 }
