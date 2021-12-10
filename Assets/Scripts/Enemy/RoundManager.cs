@@ -134,7 +134,7 @@ public class RoundManager : MonoBehaviour
 		if (presents.Contains(present))
 		{
 			presents.Remove(present);
-			GameObject.Destroy(present);
+			GameObject.Destroy(present.gameObject);
 			presentsText.text = string.Format("x {0} / {1}", presentsTotal-presents.Count, presentsTotal);
 		}
         else
@@ -145,9 +145,7 @@ public class RoundManager : MonoBehaviour
 
 	public void RemovePresent(Vector3 position)
 	{
-
-		Present present = FindPresent(position);
-		RemovePresent(present);
+		RemovePresent(FindPresent(position));
 	}
 
 	public BaseEnemy FindEnemy(Vector3 position)
