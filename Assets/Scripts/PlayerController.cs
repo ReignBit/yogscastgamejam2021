@@ -31,9 +31,14 @@ public class PlayerController : MonoBehaviour
 
     void OnPlayerDeath()
     {
-
         this.enabled = false;
     }
+
+	private void OnDestroy()
+	{
+		moveAction.performed -= Move;
+		pauseAction.performed -= Pause;
+	}
 
 	private void Move(InputAction.CallbackContext context)
 	{

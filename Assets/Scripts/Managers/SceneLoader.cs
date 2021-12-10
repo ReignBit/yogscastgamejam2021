@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+	private string currentLevel;
 	public static SceneLoader instance;
 
 	private void Awake()
@@ -24,6 +25,15 @@ public class SceneLoader : MonoBehaviour
 		LoadScene("UI");
 	}
 
+	public void LoadLevel(string name)
+	{
+		if (currentLevel != null)
+			UnloadLevel();
+
+		currentLevel = name;
+		LoadScene(name);
+	}
+
 	public void LoadScene(string sceneName, LoadSceneMode mode = LoadSceneMode.Additive)
 	{
 		print("Loading scene: " + sceneName + " with mode: " + mode);
@@ -36,5 +46,14 @@ public class SceneLoader : MonoBehaviour
 		{
 			LoadScene(scene);
 		}
+	}
+
+	public void UnloadLevel()
+	{
+		if (currentLevel == null)
+			return;
+
+		SceneManager.UnloadSceneAsync(currentLevel);
+		currentLevel = null;
 	}
 }

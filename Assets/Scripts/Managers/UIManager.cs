@@ -8,11 +8,14 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private Slider[] volumeSliders;
 
 	[SerializeField] private TMP_Text[] volumeTexts;
+	[SerializeField] private TMP_Text presentText;
+	[SerializeField] private TMP_Text enemyText;
 	[SerializeField] private GameObject pauseMenu;
 	[SerializeField] private GameObject mainMenu;
 	[SerializeField] private GameObject options;
 	[SerializeField] private GameObject HUD;
 	[SerializeField] private GameObject levelSelect;
+	private GameObject UICamera;
 	private string[] volumeTypes;
 	public static UIManager instance;
 	private GameObject previous;
@@ -29,6 +32,7 @@ public class UIManager : MonoBehaviour
 		{
 			instance = this;
 			mainMenu.SetActive(true);
+			UICamera = GameObject.Find("Camera");
 		}
 	}
 
@@ -46,6 +50,7 @@ public class UIManager : MonoBehaviour
 			volumeSliders[i].value 	= volume;
 		}
 
+		SwitchToMenu();
 	}
 
 	public void SetVolume(Slider slider)
@@ -74,6 +79,7 @@ public class UIManager : MonoBehaviour
 		this.player = player;
 		pauseMenu.SetActive(true);
 		HUD.SetActive(false);
+		UICamera.SetActive(true);
 	}
 
 	public void ContinueGame()
@@ -81,13 +87,22 @@ public class UIManager : MonoBehaviour
 		pauseMenu.SetActive(false);
 		player.enabled = true;
 		HUD.SetActive(true);
+		UICamera.SetActive(false);
 	}
 
 	public void SelectLevel(string name)
 	{
 		levelSelect.SetActive(false);
-		SceneLoader.instance.LoadScene(name);
+		SceneLoader.instance.LoadLevel(name);
 		HUD.SetActive(true);
+		UICamera.SetActive(false);
+	}
+
+	public void SwitchToMenu()
+	{
+		mainMenu.SetActive(true);
+		SceneLoader.instance.UnloadLevel();
+		AudioManager.instance.PlayMenuMusic();
 	}
 
 	public void SwitchToOptions(GameObject previous)
@@ -98,5 +113,15 @@ public class UIManager : MonoBehaviour
 	public void SwitchBackFromOptions()
 	{
 		previous.SetActive(true);
+	}
+
+	public void ChangeEnemyText(string text)
+	{
+		enemyText.text = text;
+	}
+
+	public void ChangePresentText(string text)
+	{
+		presentText.text = text;
 	}
 }
