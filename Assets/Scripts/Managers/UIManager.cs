@@ -37,6 +37,9 @@ public class UIManager : MonoBehaviour
 			volumeTexts[i].text 	= volume.ToString("#%");
 			volumeSliders[i].value 	= volume;
 		}
+
+		Resources.FindObjectsOfTypeAll<Canvas>()[0].transform.Find("Menu").gameObject.SetActive(true);
+		AudioManager.instance.PlayMenuMusic();
 	}
 
 	public void SetVolume(Slider slider)
@@ -62,7 +65,7 @@ public class UIManager : MonoBehaviour
 
 	public void SelectLevel(string name)
 	{
-		SceneManager.LoadScene(name);
+		SceneLoader.instance.LoadScene(name);
 	}
 
 	public void SwitchToOptions(GameObject previous)
