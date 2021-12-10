@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private GameObject options;
 	[SerializeField] private GameObject HUD;
 	[SerializeField] private GameObject levelSelect;
+	[SerializeField] private GameObject deathScreen;
+	[SerializeField] private GameObject victoryScreen;
+	[SerializeField] private Canvas mainCanvas;
+
 	private GameObject UICamera;
 	private string[] volumeTypes;
 	public static UIManager instance;
@@ -35,7 +39,6 @@ public class UIManager : MonoBehaviour
 			UICamera = GameObject.Find("Camera");
 		}
 	}
-
 
 	public void Start()
 	{
@@ -69,6 +72,11 @@ public class UIManager : MonoBehaviour
 		PlayerPrefs.Save();
 	}
 
+	public void ShowPlayerDeath()
+	{
+		deathScreen.SetActive(true);
+	}
+
 	public void QuitGame()
 	{
 		Application.Quit();
@@ -99,11 +107,32 @@ public class UIManager : MonoBehaviour
 		UICamera.SetActive(false);
 	}
 
+	public void HideAllUI(Transform parent)
+	{
+		foreach (Transform child in parent)
+		{
+			child.gameObject.SetActive(false);
+		}
+	}
+
 	public void SwitchToMenu()
 	{
+		HideAllUI(mainCanvas.transform);
 		mainMenu.SetActive(true);
 		SceneLoader.instance.UnloadLevel();
 		AudioManager.instance.PlayMenuMusic();
+	}
+
+	public void RestartLevel()
+	{
+		HideAllUI(mainCanvas.transform);
+		HUD.SetActive(true);
+		SceneLoader.instance.ReloadLevel();
+	}
+
+	public void NextLevel()
+	{
+		// SceneLoader.instance.LoadNext();
 	}
 
 	public void SwitchToOptions(GameObject previous)

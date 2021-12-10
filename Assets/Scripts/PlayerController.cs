@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     void OnPlayerDeath()
     {
 		DisablePlayer();
+		UIManager.instance.ShowPlayerDeath();
     }
 
 	public void DisablePlayer()
