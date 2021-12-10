@@ -77,6 +77,7 @@ public class UIManager : MonoBehaviour
 	public void PauseGame(PlayerController player)
 	{
 		this.player = player;
+		player.DisablePlayer();
 		pauseMenu.SetActive(true);
 		HUD.SetActive(false);
 		UICamera.SetActive(true);
@@ -85,7 +86,7 @@ public class UIManager : MonoBehaviour
 	public void ContinueGame()
 	{
 		pauseMenu.SetActive(false);
-		player.enabled = true;
+		player.EnablePlayer();
 		HUD.SetActive(true);
 		UICamera.SetActive(false);
 	}

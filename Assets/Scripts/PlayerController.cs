@@ -31,8 +31,19 @@ public class PlayerController : MonoBehaviour
 
     void OnPlayerDeath()
     {
-        this.enabled = false;
+		print("I am death");
+		DisablePlayer();
     }
+
+	public void DisablePlayer()
+	{
+		moveAction.performed -= Move;
+	}
+
+	public void EnablePlayer()
+	{
+		moveAction.performed += Move;
+	}
 
 	private void OnDestroy()
 	{
