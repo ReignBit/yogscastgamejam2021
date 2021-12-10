@@ -89,8 +89,15 @@ public class AudioManager : MonoBehaviour
 
 	public void PlayMenuMusic()
 	{
-		if (!audioSource.isPlaying)
-			StartCoroutine(LoadAudio(musicPath+menuMusic+".mp3", true, AudioType.MPEG, true));
+		audioSource.Stop();
+		print("Playing menu music");
+		StartCoroutine(LoadAudio(musicPath+menuMusic+".mp3", true, AudioType.MPEG, true));
+	}
+
+	public void PlayGameMusic()
+	{
+		audioSource.Stop();
+		StartCoroutine(LoadAudio(music[0], true));
 	}
 
 	private IEnumerator LoadAudio(string uri, bool startPlaying = false, AudioType audioType = AudioType.MPEG, bool loop = false)

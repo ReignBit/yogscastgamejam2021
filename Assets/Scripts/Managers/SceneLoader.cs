@@ -32,6 +32,7 @@ public class SceneLoader : MonoBehaviour
 
 		currentLevel = name;
 		LoadScene(name);
+		AudioManager.instance.PlayGameMusic();
 	}
 
 	public void LoadScene(string sceneName, LoadSceneMode mode = LoadSceneMode.Additive)

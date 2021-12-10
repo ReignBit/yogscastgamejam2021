@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour
 
     void OnPlayerDeath()
     {
-		print("I am death");
 		DisablePlayer();
     }
 
