@@ -71,6 +71,11 @@ public abstract class BaseEnemy : MonoBehaviour
                 RoundManager.instance.PlayerDeath();
             }
 
+			if (entity == TilemapManager.instance.PresentTile)
+			{
+				RoundManager.instance.RemovePresent(cellPos);
+			}
+
         }
     }
 

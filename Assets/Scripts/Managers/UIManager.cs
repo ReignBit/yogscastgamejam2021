@@ -119,6 +119,7 @@ public class UIManager : MonoBehaviour
 	{
 		HideAllUI(mainCanvas.transform);
 		mainMenu.SetActive(true);
+		UICamera.SetActive(true);
 		SceneLoader.instance.UnloadLevel();
 		AudioManager.instance.PlayMenuMusic();
 	}
@@ -133,6 +134,11 @@ public class UIManager : MonoBehaviour
 	public void NextLevel()
 	{
 		// SceneLoader.instance.LoadNext();
+	}
+
+	public void ShowWinScreen()
+	{
+		victoryScreen.SetActive(true);
 	}
 
 	public void SwitchToOptions(GameObject previous)

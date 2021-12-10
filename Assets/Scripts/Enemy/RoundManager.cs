@@ -133,6 +133,11 @@ public class RoundManager : MonoBehaviour
 			presents.Remove(present);
 			GameObject.Destroy(present.gameObject);
 			UIManager.instance.ChangePresentText(string.Format("x {0} / {1}", presentsTotal-presents.Count, presentsTotal));
+
+			if (presents.Count == 0)
+			{
+				WinGame();
+			}
 		}
         else
         {
@@ -178,12 +183,16 @@ public class RoundManager : MonoBehaviour
     /// </summary>
     public void PlayerDeath()
     {
-        Debug.Log("Player has been killed!");
         if (onPlayerDeath != null)
         {
             onPlayerDeath.Invoke();
         }
     }
+
+	public void WinGame()
+	{
+		UIManager.instance.ShowWinScreen();
+	}
 
     public Sprite GetRandomEnemySprite(int tier)
     {
