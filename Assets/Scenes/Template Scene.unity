@@ -549,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 183709254753343441, guid: 96f18e6094e90a14caf6416d51dd6d20, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 183709254753343441, guid: 96f18e6094e90a14caf6416d51dd6d20, type: 3}
       propertyPath: m_LocalPosition.z
@@ -730,7 +730,7 @@ GameObject:
   - component: {fileID: 1600508608}
   - component: {fileID: 1600508605}
   m_Layer: 0
-  m_Name: Tilemap
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
