@@ -23,9 +23,9 @@ public class RoundManager : MonoBehaviour
     [SerializeField] List<BaseEnemy> enemies = new List<BaseEnemy>();
     [SerializeField] List<Present> presents = new List<Present>();
 	[SerializeField] TMP_Text presentsText;
-	private int presentsCollected;
+	[SerializeField] TMP_Text enemiesText;
 	private int presentsTotal;
-	private int totalEnemies;
+	private int enemiesTotal;
 
     public Transform player;
     public GameObject deathParticleSystemPrefab;
@@ -46,8 +46,8 @@ public class RoundManager : MonoBehaviour
         else
 		{
             instance = this;
-			presentsCollected = 0;
 			presentsTotal = 0;
+			enemiesTotal = 0;
 		}
     }
 
@@ -71,6 +71,8 @@ public class RoundManager : MonoBehaviour
     public void AddEnemy(BaseEnemy enemy)
     {
         enemies.Add(enemy);
+		enemiesTotal++;
+		enemiesText.text = string.Format("x {0} / {1}", enemiesTotal-enemies.Count, enemiesTotal);
     }
 
 	public bool HitEnemy(Vector3 position)
@@ -87,13 +89,11 @@ public class RoundManager : MonoBehaviour
 
 	public void CollectPresent(Vector3 position)
 	{
-		presentsText.text = string.Format("x {0} / {1}", ++presentsCollected, presentsTotal);
 		CollectPresent(FindPresent(position));
 	}
 
 	public void CollectPresent(Present present)
 	{
-
 		RemovePresent(present);
 	}
 
@@ -108,6 +108,7 @@ public class RoundManager : MonoBehaviour
             enemies.Remove(enemy);
             enemy.CreateDeathEffect();
             GameObject.Destroy(enemy.gameObject);
+			enemiesText.text = string.Format("x {0} / {1}", enemiesTotal-enemies.Count, enemiesTotal);
         }
         else
         {
@@ -124,7 +125,8 @@ public class RoundManager : MonoBehaviour
     public void AddPresent(Present present)
     {
         presents.Add(present);
-		presentsText.text = string.Format("x {0} / {1}", presentsCollected, ++presentsTotal);
+		presentsTotal++;
+		presentsText.text = string.Format("x {0} / {1}", presentsTotal-presents.Count, presentsTotal);
     }
 
 	public void RemovePresent(Present present)
@@ -133,6 +135,7 @@ public class RoundManager : MonoBehaviour
 		{
 			presents.Remove(present);
 			GameObject.Destroy(present);
+			presentsText.text = string.Format("x {0} / {1}", presentsTotal-presents.Count, presentsTotal);
 		}
         else
         {
@@ -149,9 +152,10 @@ public class RoundManager : MonoBehaviour
 
 	public BaseEnemy FindEnemy(Vector3 position)
 	{
+		Vector3Int cellPosition = TilemapManager.instance.Entities.WorldToCell(position);
 		foreach (BaseEnemy enemy in enemies)
 		{
-			if (TilemapManager.instance.Entities.WorldToCell(enemy.transform.position) == TilemapManager.instance.Entities.WorldToCell(position))
+			if (TilemapManager.instance.Entities.WorldToCell(enemy.transform.position) == cellPosition)
 			{
 				return enemy;
 			}
@@ -162,9 +166,10 @@ public class RoundManager : MonoBehaviour
 
 	public Present FindPresent(Vector3 position)
 	{
+		Vector3Int cellPosition = TilemapManager.instance.Entities.WorldToCell(position);
 		foreach (Present present in presents)
 		{
-			if (present.transform.position == position)
+			if (TilemapManager.instance.Entities.WorldToCell(present.transform.position) == cellPosition)
 			{
 				return present;
 			}
